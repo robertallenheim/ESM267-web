@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 1071px;
+            height: 1052px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/CalFireHazardSeverityZones_1.js"></script>
+        <script src="data/FireStations_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[34.38034152260202,-119.89001031235246],[34.49440077548622,-119.74975454272935]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var layer_SatelliteofGoogle_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_SatelliteofGoogle_0;
+        map.addLayer(layer_SatelliteofGoogle_0);
+        function pop_CalFireHazardSeverityZones_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRA'] !== null ? Autolinker.link(String(feature.properties['SRA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['HAZ_CODE'] !== null ? Autolinker.link(String(feature.properties['HAZ_CODE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['HAZ_CLASS'] !== null ? Autolinker.link(String(feature.properties['HAZ_CLASS'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CalFireHazardSeverityZones_1_0(feature) {
+            switch(String(feature.properties['HAZ_CLASS'])) {
+                case 'High':
+                    return {
+                pane: 'pane_CalFireHazardSeverityZones_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,127,0,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Moderate':
+                    return {
+                pane: 'pane_CalFireHazardSeverityZones_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,219,88,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Very High':
+                    return {
+                pane: 'pane_CalFireHazardSeverityZones_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,25,28,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_CalFireHazardSeverityZones_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_CalFireHazardSeverityZones_1');
+        map.getPane('pane_CalFireHazardSeverityZones_1').style.zIndex = 401;
+        map.getPane('pane_CalFireHazardSeverityZones_1').style['mix-blend-mode'] = 'normal';
+        var layer_CalFireHazardSeverityZones_1 = new L.geoJson(json_CalFireHazardSeverityZones_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CalFireHazardSeverityZones_1',
+            layerName: 'layer_CalFireHazardSeverityZones_1',
+            pane: 'pane_CalFireHazardSeverityZones_1',
+            onEachFeature: pop_CalFireHazardSeverityZones_1,
+            style: style_CalFireHazardSeverityZones_1_0,
+        });
+        bounds_group.addLayer(layer_CalFireHazardSeverityZones_1);
+        map.addLayer(layer_CalFireHazardSeverityZones_1);
+        function pop_FireStations_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? Autolinker.link(String(feature.properties['NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CAD_NAME'] !== null ? Autolinker.link(String(feature.properties['CAD_NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AKA'] !== null ? Autolinker.link(String(feature.properties['AKA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TYPE'] !== null ? Autolinker.link(String(feature.properties['TYPE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UNIT'] !== null ? Autolinker.link(String(feature.properties['UNIT'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OWNER'] !== null ? Autolinker.link(String(feature.properties['OWNER'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FUNDING'] !== null ? Autolinker.link(String(feature.properties['FUNDING'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STAFFING'] !== null ? Autolinker.link(String(feature.properties['STAFFING'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADDRESS'] !== null ? Autolinker.link(String(feature.properties['ADDRESS'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CITY'] !== null ? Autolinker.link(String(feature.properties['CITY'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ZIP'] !== null ? Autolinker.link(String(feature.properties['ZIP'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PHONE_NUM'] !== null ? Autolinker.link(String(feature.properties['PHONE_NUM'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAT'] !== null ? Autolinker.link(String(feature.properties['LAT'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LON'] !== null ? Autolinker.link(String(feature.properties['LON'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COUNTY'] !== null ? Autolinker.link(String(feature.properties['COUNTY'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_FireStations_2_0() {
+            return {
+                pane: 'pane_FireStations_2',
+                shape: 'triangle',
+                radius: 10.000000000000002,
+                opacity: 1,
+                color: 'rgba(61,128,53,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(53,194,38,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_FireStations_2');
+        map.getPane('pane_FireStations_2').style.zIndex = 402;
+        map.getPane('pane_FireStations_2').style['mix-blend-mode'] = 'normal';
+        var layer_FireStations_2 = new L.geoJson(json_FireStations_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_FireStations_2',
+            layerName: 'layer_FireStations_2',
+            pane: 'pane_FireStations_2',
+            onEachFeature: pop_FireStations_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_FireStations_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_FireStations_2);
+        map.addLayer(layer_FireStations_2);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/FireStations_2.png" /> Fire Stations': layer_FireStations_2,'CalFire Hazard Severity Zones<br /><table><tr><td style="text-align: center;"><img src="legend/CalFireHazardSeverityZones_1_High0.png" /></td><td>High</td></tr><tr><td style="text-align: center;"><img src="legend/CalFireHazardSeverityZones_1_Moderate1.png" /></td><td>Moderate</td></tr><tr><td style="text-align: center;"><img src="legend/CalFireHazardSeverityZones_1_VeryHigh2.png" /></td><td>Very High</td></tr><tr><td style="text-align: center;"><img src="legend/CalFireHazardSeverityZones_1_3.png" /></td><td></td></tr></table>': layer_CalFireHazardSeverityZones_1,"Satellite of Google": layer_SatelliteofGoogle_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
